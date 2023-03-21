@@ -1,24 +1,46 @@
 ﻿// 1. Задайте двумерный массив. Найдите элементы,
 //    у которых обе позиции чётные, и замените эти элементы на их квадраты.
 
-void EvenPos(int[,] arr)
+int InputNum(string message)
 {
-    int row = arr.GetLength(0);
-    int column = arr.GetLength(1);
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine())!;
+}
 
-    for (int i = 1; i < row; i+=2)
-        for (int j = 1; j < column; j+=2)
-            arr[i, j] = arr[i,j] * arr[i, j];
+double[,] Create2DArray(int rows, int columns)
+{
+    return new double[rows, columns];
+}
+
+void Fill2DArray(double[,] array, int minValue, int maxValue)
+{
+    Random rnd = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+        for (int j = 0; j < array.GetLength(1); j++)
+            array[i, j] = Math.Round(rnd.NextDouble() + rnd.Next(minValue, maxValue), 2);
 
 }
 
-int row_num = int.Parse(Console.ReadLine()!);
-int column_num = int.Parse(Console.ReadLine()!);
-int start = int.Parse(Console.ReadLine()!);
-int stop = int.Parse(Console.ReadLine()!);
+string Print2DArray(double[,] array)
+{
+    string res = String.Empty;
+    for (int i = 0; i < array.GetLength(0); i++)
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            res += array[i, j];
+            if (j != array.GetLength(1) - 1)
+                res += ";\t";
+            else
+                res += "\n";
+        }
+    return res;
+}
 
-int[,] mass = MassNums(row_num, column_num, start, stop);
-Print(mass);
-EvenPos(mass);
-
-Print(mass);
+int numRows = InputNum("Input a number of rows: ");
+int numCols = InputNum("Input a numbers of columns: ");
+double[,] myArray = Create2DArray(numRows, numCols);
+int min = InputNum("Input a min value: ");
+int max = InputNum("Input a max value: ");
+Fill2DArray(myArray, min, max);
+string result = Print2DArray(myArray);
+Console.WriteLine(result);
